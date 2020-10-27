@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SuperFunElection.requests;
+using SuperFunElection.Domain;
+using System;
 
 namespace SuperFunElection.Controllers
 {
+    // api/election
     [Route("api/[controller]")]
     [ApiController]
     public class ElectionController : ControllerBase
@@ -19,35 +18,42 @@ namespace SuperFunElection.Controllers
             _electionService = electionService;
         }
 
-        [HttpGet ("test")]
-        public async Task<IActionResult> TestElection()
+        [HttpGet("hc")]
+        public async Task<IActionResult> HealthCheck()
         {
-            return Ok("This is a election!");
+            return Ok();
         }
 
-        [HttpPost ("test")]
-        public async Task<IActionResult> CreateNewElection()
+        //TODO: Get Rid of this
+
+        //[HttpPost ("test")]
+        //public async Task<IActionResult> CreateNewElection()
+        //{
+        //    List<Candidate> can1 = new List<Candidate>
+        //    {
+        //        new Candidate (1, "Henry", "Blake", 1)
+        //    };
+        //    List<Ballot> ballot1 = new List<Ballot>
+        //    {
+        //        new Ballot (1, "Alice", 1, 1)
+        //    };
+        //    var newElection = new Election(1, "November", can1, ballot1);
+        //    return Ok("this worked");
+        //}
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetElectionById(int id)
         {
-            List<Candidate> can1 = new List<Candidate>
-            {
-                new Candidate (1, "Henry", "Blake", 1)
-            };
-            List<Ballot> ballot1 = new List<Ballot>
-            {
-                new Ballot (1, "Alice", 1, 1)
-            };
-            var newElection = new Election(1, "November", can1, ballot1);
-            return Ok("this worked");
+            throw new NotImplementedException();
         }
 
-        [HttpPost ("create")]
-
+        [HttpPost()]
         public async Task<IActionResult> CreateNewElection(CreateNewElectionRequest request)
         {
+            var newElection = new Election(request.Date, request.Description);
+            var createdElection = await _electionService.CreateElection(newElection);
 
-            var newElection = new Election(request.Id, request.Date, request.Candidates, request.Ballots);
-            await _electionService.CreateElection(newElection);
-            return Ok();
+            return CreatedAtAction(nameof(GetElectionById), new { id = createdElection.Id }, createdElection);
         }
     }
 }

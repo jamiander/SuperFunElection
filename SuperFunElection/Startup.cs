@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SuperFunElection.Controllers;
+using SuperFunElection.Data;
 using SuperFunElection.Repositories;
 
 namespace SuperFunElection
@@ -29,6 +31,10 @@ namespace SuperFunElection
         {
             services.AddControllers();
             services.AddSwaggerGen();
+
+            services.AddDbContext<SuperFunElectionDbContext>(options => { 
+                options.UseSqlServer(Configuration.GetConnectionString("SuperFunElectionDb"));
+            });
 
             services.AddScoped<IElectionService, ElectionService>();
             services.AddScoped<IElectionRepository, ElectionRepository>();

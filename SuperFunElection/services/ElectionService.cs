@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.DataProtection.Repositories;
-using SuperFunElection.Controllers;
+﻿using SuperFunElection.Controllers;
 using SuperFunElection.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using SuperFunElection.Domain;
 
 namespace SuperFunElection
 {
@@ -15,11 +12,11 @@ namespace SuperFunElection
         public ElectionService(IElectionRepository electionRepository) {
             _electionRepository = electionRepository;
         }
-        public async Task CreateElection(Election newElectionToCreate)
+
+        public async Task<Election> CreateElection(Election newElectionToCreate)
         {
-            //var election = new Election();
-            //election.CreateNewElection(newElectionToCreate.Id, newElectionToCreate.Date, newElectionToCreate.Candidates, newElectionToCreate.Ballots);
-            _electionRepository.AddElection(newElectionToCreate);
+            var createdElection = await _electionRepository.AddElection(newElectionToCreate);
+            return createdElection;
         }
     }
 }
