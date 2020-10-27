@@ -14,10 +14,10 @@ namespace SuperFunElection.Controllers
     {
         private IElectionService _electionService;
 
-        /*public ElectionController(IElectionService electionService)
+        public ElectionController(IElectionService electionService)
         {
             _electionService = electionService;
-        }*/
+        }
 
         [HttpGet ("test")]
         public async Task<IActionResult> TestElection()
