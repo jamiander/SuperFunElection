@@ -20,5 +20,12 @@ namespace SuperFunElection.Repositories
             await _dbContext.SaveChangesAsync();
             return newElection;
         }
+
+        public async Task<Election> FindById(int id)
+        {
+            Election selectedElection = _dbContext.Elections.Find(id);
+
+            return selectedElection;
+        }
     }
 }

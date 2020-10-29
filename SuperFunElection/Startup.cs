@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using SuperFunElection.Controllers;
 using SuperFunElection.Data;
 using SuperFunElection.Repositories;
+using SuperFunElection.services;
 
 namespace SuperFunElection
 {
@@ -38,6 +39,9 @@ namespace SuperFunElection
 
             services.AddScoped<IElectionService, ElectionService>();
             services.AddScoped<IElectionRepository, ElectionRepository>();
+            services.AddScoped<ICandidateService, CandidateService>();
+            services.AddScoped<ICandidateRepository, CandidateRepository>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

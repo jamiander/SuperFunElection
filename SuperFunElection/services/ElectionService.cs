@@ -18,5 +18,11 @@ namespace SuperFunElection
             var createdElection = await _electionRepository.AddElection(newElectionToCreate);
             return createdElection;
         }
+
+        public async Task<Election> SelectElection(int id)
+        {
+            var selectElection = await _electionRepository.FindById(id);
+            return selectElection;
+        }
     }
 }

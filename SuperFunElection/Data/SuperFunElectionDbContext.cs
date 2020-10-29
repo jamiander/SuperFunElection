@@ -9,6 +9,7 @@ namespace SuperFunElection.Data
         {}
 
         public DbSet<Election> Elections { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,26 @@ namespace SuperFunElection.Data
                     .WithOne(candidacy => candidacy.Election)
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
+            });
+
+            modelBuilder.Entity<Candidate>(candidate =>
+            {
+                candidate.ToTable("Candidate");
+
+                candidate.HasKey(candidate => candidate.Id);
+
+                candidate.OwnsOne(candidate => candidate.Name, n =>
+                {
+                    n.Property(n => n.FirstName)
+                        .HasColumnName("FirstName");
+                    n.Property(n => n.LastName)
+                        .HasColumnName("LastName");
+
+                    candidate.HasMany(candidate => candidate.ElectionCandidacies)
+                        .WithOne(candidacy => candidacy.Candidate)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
             });
         }
     }

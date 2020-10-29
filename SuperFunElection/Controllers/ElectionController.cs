@@ -24,27 +24,16 @@ namespace SuperFunElection.Controllers
             return Ok();
         }
 
-        //TODO: Get Rid of this
-
-        //[HttpPost ("test")]
-        //public async Task<IActionResult> CreateNewElection()
-        //{
-        //    List<Candidate> can1 = new List<Candidate>
-        //    {
-        //        new Candidate (1, "Henry", "Blake", 1)
-        //    };
-        //    List<Ballot> ballot1 = new List<Ballot>
-        //    {
-        //        new Ballot (1, "Alice", 1, 1)
-        //    };
-        //    var newElection = new Election(1, "November", can1, ballot1);
-        //    return Ok("this worked");
-        //}
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetElectionById(int id)
         {
-            throw new NotImplementedException();
+            var selectedElection = await _electionService.SelectElection(id);
+            if(selectedElection == null)
+            {
+                return NotFound($"Election with id {id} was not found.");
+            }
+            return Ok(selectedElection);
+            
         }
 
         [HttpPost()]

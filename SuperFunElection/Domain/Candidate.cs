@@ -9,7 +9,7 @@ namespace SuperFunElection.Domain
         {
             Id = id;
             Name = name;
-            _electionCandidacies = electionCandidacies;
+            _electionCandidacies = electionCandidacies ?? new List<Candidacy>();
         }
 
         public PersonName Name { get; private set; }

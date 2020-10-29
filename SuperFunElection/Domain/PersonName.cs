@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace SuperFunElection.Domain
 {
+    [Owned]
     public class PersonName
     {
         public string FirstName { get; private set; }
