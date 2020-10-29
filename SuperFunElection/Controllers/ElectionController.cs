@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using SuperFunElection.requests;
 using SuperFunElection.Domain;
 using System;
+using SuperFunElection.Responses;
+using System.Linq;
+using SuperFunElection.Domain.Specifications;
 
 namespace SuperFunElection.Controllers
 {
@@ -24,6 +27,14 @@ namespace SuperFunElection.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllElections([FromQuery] GetAllElectionsRequest request)
+        {
+            var query = new GetElectionsByFilter(request.StartDate, request.EndDate, request.DescriptionSegment);
+            var matchedElections = await _electionService.GetElections(query);
+            return Ok(matchedElections);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetElectionById(int id)
         {
@@ -32,8 +43,20 @@ namespace SuperFunElection.Controllers
             {
                 return NotFound($"Election with id {id} was not found.");
             }
-            return Ok(selectedElection);
-            
+
+            var response = new ElectionDetailResponse
+            {
+                Id = selectedElection.Id,
+                Description = selectedElection.Description,
+                Date = selectedElection.Date.ToShortDateString(),
+                Results = selectedElection.Candidacies.Select(c => new ElectionDetailResponse.CandidateItem { 
+                    FirstName = c.Candidate.Name.FirstName,
+                    LastName = c.Candidate.Name.LastName,
+                    Votes = c.Ballots.Count()
+                })
+            };
+
+            return Ok(response);         
         }
 
         [HttpPost()]
@@ -42,7 +65,12 @@ namespace SuperFunElection.Controllers
             var newElection = new Election(request.Date, request.Description);
             var createdElection = await _electionService.CreateElection(newElection);
 
-            return CreatedAtAction(nameof(GetElectionById), new { id = createdElection.Id }, createdElection);
+            var response = new ElectionCreatedResponse
+            {
+                Id = createdElection.Id
+            };
+
+            return CreatedAtAction(nameof(GetElectionById), new { id = createdElection.Id }, response);
         }
     }
 }

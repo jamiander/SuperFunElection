@@ -2,6 +2,8 @@
 using SuperFunElection.Repositories;
 using System.Threading.Tasks;
 using SuperFunElection.Domain;
+using System.Collections.Generic;
+using SuperFunElection.Domain.Specifications;
 
 namespace SuperFunElection
 {
@@ -23,6 +25,18 @@ namespace SuperFunElection
         {
             var selectElection = await _electionRepository.FindById(id);
             return selectElection;
+        }
+
+        public async Task<IEnumerable<Election>> GetOpenElections()
+        {
+            var elections = await _electionRepository.FindByQuery(new GetOpenElectionsSpecification());
+            return elections;
+        }
+
+        public async Task<IEnumerable<Election>> GetElections(GetElectionsByFilter query)
+        {
+            var elections = await _electionRepository.FindByQuery(query);
+            return elections;
         }
     }
 }
