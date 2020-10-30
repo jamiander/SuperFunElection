@@ -1,4 +1,5 @@
 ﻿using SuperFunElection.Domain;
+using SuperFunElection.Domain.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace SuperFunElection.Repositories
     {
         Task<Candidate> AddCandidate(Candidate newCandidate);
         Task<Candidate> FindById(int id);
+        Task<IEnumerable<Candidate>> FindByQuery(ISpecification<Candidate> candidateSpecification);
     }
 }

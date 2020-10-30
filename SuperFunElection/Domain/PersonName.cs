@@ -9,7 +9,9 @@ namespace SuperFunElection.Domain
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
 
-        private PersonName(string firstName, string lastName)
+        public PersonName() { }
+
+        public PersonName(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;

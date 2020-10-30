@@ -1,5 +1,7 @@
-﻿using SuperFunElection.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperFunElection.Data;
 using SuperFunElection.Domain;
+using SuperFunElection.Domain.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,5 +31,12 @@ namespace SuperFunElection.Repositories
 
             return selectedCandidate;
         }
+
+        public async Task<IEnumerable<Candidate>> FindByQuery(ISpecification<Candidate> candidateSpecification)
+        {
+            var validCandidates = _dbContext.Candidates.Where(candidateSpecification.Filter());
+            return await validCandidates.ToListAsync();
+        }
+
     }
 }

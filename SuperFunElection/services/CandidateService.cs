@@ -1,4 +1,5 @@
 ﻿using SuperFunElection.Domain;
+using SuperFunElection.Domain.Specifications;
 using SuperFunElection.Repositories;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,18 @@ namespace SuperFunElection.services
         {
             var selectCandidate = await _candidateRepository.FindById(id);
             return selectCandidate;
+        }
+
+        public async Task<IEnumerable<Candidate>> GetSelectedCandidate()
+        {
+            var candidates = await _candidateRepository.FindByQuery(new GetSelectedCandidatesSpecification());
+            return candidates;
+        }
+
+        public async Task<IEnumerable<Candidate>> GetCandidates(GetCandidatesByFilter query)
+        {
+            var candidates = await _candidateRepository.FindByQuery(query);
+            return candidates;
         }
     }
 }
