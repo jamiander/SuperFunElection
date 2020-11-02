@@ -38,5 +38,10 @@ namespace SuperFunElection
             var elections = await _electionRepository.FindByQuery(query);
             return elections;
         }
+
+        public Task<Election> AddCandidateToElection(int electionId, int candidateId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

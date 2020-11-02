@@ -10,5 +10,6 @@ namespace SuperFunElection.Controllers
         Task<Election> CreateElection(Election newElection);
         Task<Election> SelectElection(int id);
         Task<IEnumerable<Election>> GetElections(GetElectionsByFilter query);
+        Task<Election> AddCandidateToElection(int electionId, int candidateId);
     }
 }

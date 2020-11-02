@@ -72,6 +72,21 @@ namespace SuperFunElection.Controllers
 
             return CreatedAtAction(nameof(GetElectionById), new { id = createdElection.Id }, response);
         }
+
+        //URL: POST api/election/17/candidates
+        [HttpPost("{id}/candidates")]
+        public async Task<IActionResult> AddCandidateToElection(AddCandidateToElectionRequest request)
+        {
+            var election = await _electionService.AddCandidateToElection(request.ElectionId, request.CandidateId);
+
+            var response = new CandidateAddedToElectionResponse
+            {
+                ElectionId = election.Id,
+                CandidateIds = election.Candidacies.Select(x => x.Candidate.Id).ToArray()
+            };
+
+            return Ok(response);
+        }
     }
 }
 
