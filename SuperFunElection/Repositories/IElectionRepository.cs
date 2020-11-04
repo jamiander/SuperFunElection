@@ -10,5 +10,6 @@ namespace SuperFunElection.Repositories
         Task<Election> AddElection(Election newElection);
         Task<Election> FindById(int id);
         Task<IEnumerable<Election>> FindByQuery(ISpecification<Election> electionSpecification);
+        Task<Election> UpdateCandidate(Candidate candidate);
     }
 }
