@@ -60,7 +60,7 @@ namespace SuperFunElection
 
             election.AddCandidate(candidate);
 
-            _electionRepository.UpdateCandidate(candidate);
+            await _electionRepository.UpdateElection(election);
 
             return election;
         }

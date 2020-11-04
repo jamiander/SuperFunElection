@@ -52,6 +52,22 @@ namespace SuperFunElection.Data
                         .IsRequired();
                 });
             });
+
+            modelBuilder.Entity<Candidacy>(candidacy => { 
+                candidacy.ToTable("Candidacies");
+
+                candidacy.HasKey(candidacy => candidacy.Id);
+
+                candidacy.Property(candidacy => candidacy.InstatedOn)
+                    .HasColumnName("EstablishedOn");
+
+                candidacy.Property(candidacy => candidacy.TerminatedOn)
+                    .HasColumnName("TerminatedOn");
+
+                candidacy.HasMany(candidacy => candidacy.Ballots)
+                    .WithOne(ballot => ballot.Candidacy)
+                    .IsRequired();
+            });
         }
     }
 }

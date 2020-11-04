@@ -27,7 +27,11 @@ namespace SuperFunElection.Repositories
 
         public async Task<Election> FindById(int id)
         {
-            Election selectedElection = _dbContext.Elections.Find(id);
+            Election selectedElection = await _dbContext.Elections
+                .Where(x => x.Id == id)
+                .Include(x => x.Candidacies)
+                    .ThenInclude(c => c.Candidate)
+                .FirstOrDefaultAsync();
 
             return selectedElection;
         }
@@ -38,9 +42,10 @@ namespace SuperFunElection.Repositories
             return await validElections.ToListAsync();
         }
 
-        public Task<Election> UpdateCandidate(Candidate candidate)
+        public async Task<Election> UpdateElection(Election election)
         {
-            throw new NotImplementedException();
+            await _dbContext.SaveChangesAsync();
+            return election;
         }
     }
 }
