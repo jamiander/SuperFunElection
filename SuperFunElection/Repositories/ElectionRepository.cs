@@ -37,5 +37,10 @@ namespace SuperFunElection.Repositories
             var validElections = _dbContext.Elections.Where(electionSpecification.Filter());
             return await validElections.ToListAsync();
         }
+
+        public Task<Election> UpdateCandidate(Candidate candidate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
