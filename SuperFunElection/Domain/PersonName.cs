@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace SuperFunElection.Domain
 {
     [Owned]
-    public class PersonName
+    public class PersonName : ValueObject
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -31,6 +32,12 @@ namespace SuperFunElection.Domain
 
             // Create the object
             return new PersonName(firstName, lastName);
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return FirstName;
+            yield return LastName;
         }
     }
 }
