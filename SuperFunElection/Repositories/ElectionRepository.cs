@@ -31,6 +31,8 @@ namespace SuperFunElection.Repositories
                 .Where(x => x.Id == id)
                 .Include(x => x.Candidacies)
                     .ThenInclude(c => c.Candidate)
+                .Include(x => x.Candidacies)
+                    .ThenInclude(c => c.Ballots)
                 .FirstOrDefaultAsync();
 
             return selectedElection;

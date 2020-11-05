@@ -41,5 +41,19 @@ namespace SuperFunElection.Domain
                 _candidacies.Add(candidacy);
             }
         }
+
+        public void VoteFor(Candidate candidate)
+        {
+            // Basic guards - null candidate, etc.
+            // Is this candidate in this election?
+
+            // Has this voter already submitted a ballot?
+
+            // Find the candidacy
+
+            // Create a new Ballot()
+
+            // Add the Ballot to the candidacy's ballot list
+        }
     }
 }

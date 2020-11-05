@@ -31,5 +31,10 @@ namespace SuperFunElection.Domain
 
         private List<Ballot> _ballots = new List<Ballot>();
         public IReadOnlyCollection<Ballot> Ballots => _ballots.AsReadOnly();
+
+        public void AddBallot(Ballot ballot)
+        {
+            
+        }
     }
 }
