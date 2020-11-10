@@ -36,7 +36,7 @@ namespace SuperFunElection.UnitTests.Domains
              FakeCandidateLastName = "Lovelace";
              FakeCandidateId = 20;
              
-             FakePersonName = new PersonName(FakeCandidateFirstName, FakeCandidateLastName);
+             FakePersonName = PersonName.Create(FakeCandidateFirstName, FakeCandidateLastName);
              FakeCandidate = new Candidate(FakeCandidateId, FakePersonName, null);
              FakeElection = new Election(17, FakeElectionDate, FakeElectionDescription, FakeCandidacies);
 

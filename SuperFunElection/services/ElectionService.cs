@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SuperFunElection.Domain.Specifications;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System;
 
 namespace SuperFunElection
 {
@@ -74,10 +75,33 @@ namespace SuperFunElection
             election.VoteFor(candidate, voter);
 
             await _electionRepository.UpdateElection(election);
+
             return election;
 
 
         }
-            
+
+        public async Task<Election> DeleteCandidacy(int candidateId, int electionId)
+        {
+            var election = await _electionRepository.FindById(electionId);
+            var candidate = await _candidateRepository.FindById(candidateId);
+
+            election.Delete(candidate);
+
+            await _electionRepository.UpdateElection(election);
+            return election;
+        }
+
+        public async Task<Election> TerminateCandidacy(int candidateId, int electionId, DateTime dateTime)
+        {
+            var election = await _electionRepository.FindById(electionId);
+            var candidate = await _candidateRepository.FindById(candidateId);
+
+            election.Terminate(candidate, dateTime);
+
+            await _electionRepository.UpdateElection(election);
+            return election;
+        }
+
     }
 }

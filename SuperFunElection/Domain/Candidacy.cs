@@ -36,5 +36,10 @@ namespace SuperFunElection.Domain
         {
             _ballots.Add(ballot);
         }
+
+        public void UpdateCandidacy(DateTime dateTime)
+        {
+            TerminatedOn = dateTime;
+        }
     }
 }

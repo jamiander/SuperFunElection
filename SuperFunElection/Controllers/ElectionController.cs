@@ -92,19 +92,50 @@ namespace SuperFunElection.Controllers
             return Ok(response);
         }
 
+        [HttpPost("{id}/delete")]
+        public async Task<IActionResult> DeleteCandidacy(DeleteCandidacyRequest request)
+        {
+            var selectedCandidacy = await _electionService.DeleteCandidacy(request.CandidateId, request.ElectionId);
+
+            var response = new DeleteCandidacyResponse
+            {
+
+                CandidacyId = selectedCandidacy.Id
+
+            };
+
+            return Ok(response);
+        }
+
+        [HttpPost("{id}/terminate")]
+        public async Task<IActionResult> TerminateCandidacy(TerminateCandidacyRequest request)
+        {
+            var selectedCandidacy = await _electionService.TerminateCandidacy(request.CandidateId, request.ElectionId, DateTime.Now);
+
+            var response = new TerminateCandidacyResponse
+            {
+
+                CandidacyId = selectedCandidacy.Id,
+                DateTime = DateTime.Now
+
+            };
+
+            return Ok(response);
+        }
+
         [HttpPost("{id}/votes")]
         public async Task<IActionResult> AddVoteToElection(AddVoteToElectionRequest request)
         {
-            var Voter = new PersonName(request.firstName, request.lastName);
+            var Voter = PersonName.Create(request.firstName, request.lastName);
              
             Election election = await _electionService.AddVoteToElection(request.ElectionId, request.CandidateId, Voter);
-
+            var currentCandidacy = election.Candidacies.First(x => x.Candidate.Id == request.CandidateId);
             var response = new VoteAddedToElectionResponse
             {
-                ElectionId = election.Id,
-                CandidateIds = election.Candidacies.Select(x => x.Candidate.Id).ToArray(),
-                //Ballot = election.Candidacies.Select(x => x.Candidate)
-
+                ElectionId = request.ElectionId,
+                CandidateId = request.CandidateId,
+                VoterName = Voter,
+                TotalVotes = currentCandidacy.Ballots.Count()
             };
             
             return Ok(response);

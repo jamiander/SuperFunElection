@@ -1,4 +1,5 @@
-﻿using SuperFunElection.Domain;
+﻿using Microsoft.AspNetCore.Mvc;
+using SuperFunElection.Domain;
 using SuperFunElection.Domain.Specifications;
 using SuperFunElection.Repositories;
 using System;
@@ -40,5 +41,6 @@ namespace SuperFunElection.services
             var candidates = await _candidateRepository.FindByQuery(query);
             return candidates;
         }
+
     }
 }

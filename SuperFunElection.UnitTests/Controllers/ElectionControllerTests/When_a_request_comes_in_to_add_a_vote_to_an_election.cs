@@ -20,7 +20,6 @@ namespace SuperFunElection.UnitTests.Controllers.ElectionControllerTests
         protected static OkObjectResult Result;
 
         protected static AddVoteToElectionRequest FakeAddVoteToElectionRequest;
-        protected static VoteAddedToElectionResponse FakeVoteAddedToElectionResponse;
         protected static Election FakeElection;
         protected static Candidate FakeCandidate;
         protected static string FakeVoterFirstName;
@@ -37,7 +36,7 @@ namespace SuperFunElection.UnitTests.Controllers.ElectionControllerTests
         {
             FakeVoterFirstName ="Salvador";
             FakeVoterLastName = "Dali";
-            FakeVoter = new PersonName(FakeVoterFirstName, FakeVoterLastName);
+            FakeVoter = PersonName.Create(FakeVoterFirstName, FakeVoterLastName);
 
             FakeAddVoteToElectionRequest = new AddVoteToElectionRequest
             {
@@ -47,15 +46,10 @@ namespace SuperFunElection.UnitTests.Controllers.ElectionControllerTests
                 lastName = FakeVoterLastName
             };
 
-            FakeVoteAddedToElectionResponse = new VoteAddedToElectionResponse
-            {
-                CandidateId = FakeCandidateId
-            };
-
-
+            
             FakeCandidate = new Candidate(FakeCandidateId, PersonName.Create("Carol", "Cunningham"), null);
 
-            FakeCandidacy = new Candidacy(FakeElection, FakeCandidate, null);
+            FakeCandidacy = new Candidacy(FakeElection, FakeCandidate, new List<Ballot> { FakeBallot });
             FakeBallot = new Ballot(FakeBallotId, FakeVoter, FakeCandidacy);
 
             FakeElection = new Election(FakeElectionId, DateTime.Now, "Fake Description", new List<Candidacy> { FakeCandidacy });
@@ -73,8 +67,8 @@ namespace SuperFunElection.UnitTests.Controllers.ElectionControllerTests
         It should_have_a_successful_status_code = () =>
             Result.StatusCode.ShouldEqual(200);
 
-        //It should_have_the_ballot_in_the_list = () =>
-        //     ((VoteAddedToElectionResponse)Result.Value).Ballots.ShouldContain(FakeBallot);
+        It should_have_the_ballot_in_the_list = () =>
+             ((VoteAddedToElectionResponse)Result.Value).TotalVotes.ShouldEqual(1);
 
 
     }

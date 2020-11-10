@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -43,23 +44,35 @@ namespace SuperFunElection.Domain
             }
         }
 
+        public void Delete(Candidate candidate)
+        {
+            var deletedCandidacy = _candidacies.First(x => x.Candidate == candidate);
+               
+            _candidacies.Remove(deletedCandidacy);
+        }
+
+        public void Terminate(Candidate candidate, DateTime dateTime)
+        {
+            var terminatedCandidacy = _candidacies.First(x => x.Candidate == candidate);
+            terminatedCandidacy.UpdateCandidacy(dateTime);
+        }
+
         public void VoteFor(Candidate candidate, PersonName voter)
         {
 
             if (candidate is null)
                 throw new ArgumentNullException(nameof(candidate), "You must vote for an existing candidate.");
-
-            //var candidacy = new Candidacy(this, candidate, null);
-
-            
-            //if (voter != null) 
-            //    throw new ArgumentException(nameof(voter), "You have already cast a vote.");
+            if (voter is null || voter.FirstName == "" || voter.LastName == "")
+                throw new ArgumentException(nameof(voter), "You must enter a voter first and last name.");
+            var duplicateBallot = _candidacies.SelectMany(x => x.Ballots).FirstOrDefault(y => y.Voter == voter);
+            if (duplicateBallot != null)
+                throw new ArgumentException(nameof(voter), "Voter has already cast a ballot.");
 
             var candidacyToAddVote = _candidacies.Find(x => x.Candidate == candidate);
-            var ballot = new Ballot(voter, candidacyToAddVote);
-
+            
             if (candidacyToAddVote != null)
             {
+                var ballot = new Ballot(voter, candidacyToAddVote);
                 candidacyToAddVote.AddBallot(ballot);
             }
 

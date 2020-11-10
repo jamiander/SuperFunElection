@@ -68,6 +68,7 @@ namespace SuperFunElection.Data
 
                 candidacy.HasMany(candidacy => candidacy.Ballots)
                     .WithOne(ballot => ballot.Candidacy)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 

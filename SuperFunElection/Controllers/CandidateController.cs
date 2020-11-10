@@ -48,11 +48,12 @@ namespace SuperFunElection.Controllers
         [HttpPost()]
         public async Task<IActionResult> CreateNewCandidate(CreateNewCandidateRequest request)
         {
-            var newPersonName = new PersonName(request.firstName, request.lastName);
+            var newPersonName = PersonName.Create(request.firstName, request.lastName);
             var newCandidate = new Candidate(newPersonName);
             var createdCandidate = await _candidateService.CreateCandidate(newCandidate);
 
             return CreatedAtAction(nameof(GetCandidateById), new { id = createdCandidate.Id }, createdCandidate);
         }
+  
     }
 }
