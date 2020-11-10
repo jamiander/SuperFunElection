@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SuperFunElection.requests
+namespace SuperFunElection.Requests
 {
-    public class CreateNewCandidateRequest
+    public class AddVoteToElectionRequest
     {
+        public int ElectionId { get; set; }
+        public int CandidateId { get; set; }
+
         public string firstName { get; set; }
         public string lastName { get; set; }
 

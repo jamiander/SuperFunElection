@@ -6,14 +6,15 @@ namespace SuperFunElection.Data
     public class SuperFunElectionDbContext : DbContext
     {
         public SuperFunElectionDbContext(DbContextOptions<SuperFunElectionDbContext> contextOptions) : base(contextOptions)
-        {}
+        { }
 
         public DbSet<Election> Elections { get; set; }
         public DbSet<Candidate> Candidates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Election>(election => {
+            modelBuilder.Entity<Election>(election =>
+            {
                 election.ToTable("Election");
 
                 election.HasKey(election => election.Id);
@@ -53,7 +54,8 @@ namespace SuperFunElection.Data
                 });
             });
 
-            modelBuilder.Entity<Candidacy>(candidacy => { 
+            modelBuilder.Entity<Candidacy>(candidacy =>
+            {
                 candidacy.ToTable("Candidacies");
 
                 candidacy.HasKey(candidacy => candidacy.Id);
@@ -68,6 +70,25 @@ namespace SuperFunElection.Data
                     .WithOne(ballot => ballot.Candidacy)
                     .IsRequired();
             });
+
+            modelBuilder.Entity<Ballot>(ballot =>
+            {
+                ballot.ToTable("Ballot");
+
+                ballot.HasKey(ballot => ballot.Id);
+
+                ballot.OwnsOne(ballot => ballot.Voter, n =>
+                {
+                    n.Property(n => n.FirstName)
+                        .HasColumnName("FirstName");
+                    n.Property(n => n.LastName)
+                        .HasColumnName("LastName");
+
+                    ballot.HasOne(ballot => ballot.Candidacy);
+
+                });
+            });
         }
     }
 }
+

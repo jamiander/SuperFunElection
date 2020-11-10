@@ -34,7 +34,7 @@ namespace SuperFunElection.Domain
 
         public void AddBallot(Ballot ballot)
         {
-            
+            _ballots.Add(ballot);
         }
     }
 }

@@ -6,6 +6,11 @@ using System;
 using SuperFunElection.Responses;
 using System.Linq;
 using SuperFunElection.Domain.Specifications;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using SuperFunElection.Requests;
+using System.Collections.Generic;
+using SuperFunElection.Repositories;
 
 namespace SuperFunElection.Controllers
 {
@@ -15,7 +20,6 @@ namespace SuperFunElection.Controllers
     public class ElectionController : ControllerBase
     {
         private IElectionService _electionService;
-
         public ElectionController(IElectionService electionService)
         {
             _electionService = electionService;
@@ -87,6 +91,25 @@ namespace SuperFunElection.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("{id}/votes")]
+        public async Task<IActionResult> AddVoteToElection(AddVoteToElectionRequest request)
+        {
+            var Voter = new PersonName(request.firstName, request.lastName);
+             
+            Election election = await _electionService.AddVoteToElection(request.ElectionId, request.CandidateId, Voter);
+
+            var response = new VoteAddedToElectionResponse
+            {
+                ElectionId = election.Id,
+                CandidateIds = election.Candidacies.Select(x => x.Candidate.Id).ToArray(),
+                //Ballot = election.Candidacies.Select(x => x.Candidate)
+
+            };
+            
+            return Ok(response);
+        }
+
     }
 }
 

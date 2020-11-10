@@ -12,10 +12,8 @@ namespace SuperFunElection.UnitTests.Domains
     class when_addcandidate_is_called_to_add_candidate_to_election : WithSubject<Election>
     {
         protected static Election FakeElection;
-        protected static Election FakeNewElection;
         protected static Candidate FakeCandidate;
-        protected static Election Result;
-
+        
         protected static DateTime FakeElectionDate;
         protected static string FakeElectionDescription;
         protected static int FakeElectionId;

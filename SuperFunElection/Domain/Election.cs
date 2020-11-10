@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SuperFunElection.Domain
@@ -42,8 +43,27 @@ namespace SuperFunElection.Domain
             }
         }
 
-        public void VoteFor(Candidate candidate)
+        public void VoteFor(Candidate candidate, PersonName voter)
         {
+
+            if (candidate is null)
+                throw new ArgumentNullException(nameof(candidate), "You must vote for an existing candidate.");
+
+            //var candidacy = new Candidacy(this, candidate, null);
+
+            
+            //if (voter != null) 
+            //    throw new ArgumentException(nameof(voter), "You have already cast a vote.");
+
+            var candidacyToAddVote = _candidacies.Find(x => x.Candidate == candidate);
+            var ballot = new Ballot(voter, candidacyToAddVote);
+
+            if (candidacyToAddVote != null)
+            {
+                candidacyToAddVote.AddBallot(ballot);
+            }
+
+
             // Basic guards - null candidate, etc.
             // Is this candidate in this election?
 

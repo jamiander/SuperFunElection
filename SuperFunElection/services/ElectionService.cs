@@ -5,6 +5,7 @@ using SuperFunElection.Domain;
 using System.Collections.Generic;
 using SuperFunElection.Domain.Specifications;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace SuperFunElection
 {
@@ -64,5 +65,19 @@ namespace SuperFunElection
 
             return election;
         }
+
+        public async Task<Election> AddVoteToElection(int electionId, int candidateId, PersonName voter)
+        {
+            var election = await _electionRepository.FindById(electionId);
+            var candidate = await _candidateRepository.FindById(candidateId);
+           
+            election.VoteFor(candidate, voter);
+
+            await _electionRepository.UpdateElection(election);
+            return election;
+
+
+        }
+            
     }
 }

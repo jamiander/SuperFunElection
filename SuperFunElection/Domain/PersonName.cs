@@ -21,11 +21,11 @@ namespace SuperFunElection.Domain
         public static PersonName Create(string firstName, string lastName)
         {
             // Validations/operations go here
-            if(string.IsNullOrEmpty(firstName))
-                throw new ArgumentNullException(nameof(firstName));
+            //if (string.IsNullOrEmpty(firstName))
+            //    throw new ArgumentNullException(nameof(firstName));
 
-            if (string.IsNullOrEmpty(lastName))
-                throw new ArgumentNullException(nameof(lastName));
+            //if (string.IsNullOrEmpty(lastName))
+            //    throw new ArgumentNullException(nameof(lastName));
 
             firstName.Trim();
             lastName.Trim();
