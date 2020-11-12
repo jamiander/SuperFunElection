@@ -12,5 +12,6 @@ namespace SuperFunElection.Repositories
         Task<Candidate> AddCandidate(Candidate newCandidate);
         Task<Candidate> FindById(int id);
         Task<IEnumerable<Candidate>> FindByQuery(ISpecification<Candidate> candidateSpecification);
+        Task<Candidate> UpdateCandidate(Candidate candidate);
     }
 }

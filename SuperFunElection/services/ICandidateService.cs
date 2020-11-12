@@ -13,7 +13,6 @@ namespace SuperFunElection.services
         Task<Candidate> CreateCandidate(Candidate candidate);
         Task<IEnumerable<Candidate>> GetCandidates(GetCandidatesByFilter query);
         Task<IEnumerable<Candidate>> GetSelectedCandidate();
-
-
+        Task<Candidate> UpdateCandidate(int candidateId, string firstName, string lastName);
     }
 }

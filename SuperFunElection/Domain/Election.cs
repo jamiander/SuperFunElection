@@ -41,6 +41,8 @@ namespace SuperFunElection.Domain
             {
                 var candidacy = new Candidacy(this, candidate, null);
                 _candidacies.Add(candidacy);
+                
+                candidate.AddCandidacy(candidacy);
             }
         }
 

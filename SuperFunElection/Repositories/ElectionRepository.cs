@@ -47,7 +47,7 @@ namespace SuperFunElection.Repositories
         public async Task<Election> UpdateElection(Election election)
         {
             await _dbContext.SaveChangesAsync();
-            return election;
+            return (election);
         }
     }
 }

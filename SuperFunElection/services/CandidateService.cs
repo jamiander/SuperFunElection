@@ -42,5 +42,18 @@ namespace SuperFunElection.services
             return candidates;
         }
 
+        public async Task<Candidate> UpdateCandidate(int candidateId, string firstName, string lastName)
+        {
+            //var updatedCandidate = await _candidateRepository.AddCandidate(candidateToUpdate);
+
+            var updatedCandidate = await _candidateRepository.FindById(candidateId);
+            updatedCandidate.Update(firstName, lastName);
+
+            await _candidateRepository.UpdateCandidate(updatedCandidate);
+
+
+            return updatedCandidate;
+        }
+
     }
 }

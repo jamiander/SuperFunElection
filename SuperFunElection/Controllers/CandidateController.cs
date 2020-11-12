@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using SuperFunElection.Domain;
 using SuperFunElection.Domain.Specifications;
 using SuperFunElection.requests;
+using SuperFunElection.Requests;
+using SuperFunElection.Responses;
 using SuperFunElection.services;
 
 namespace SuperFunElection.Controllers
@@ -54,6 +56,20 @@ namespace SuperFunElection.Controllers
 
             return CreatedAtAction(nameof(GetCandidateById), new { id = createdCandidate.Id }, createdCandidate);
         }
-  
+
+        [HttpPost("{id}/update")]
+        public async Task<IActionResult> UpdateCandidate(UpdateCandidateRequest request)
+        {
+            var updatedCandidate = await _candidateService.UpdateCandidate(request.CandidateId, request.FirstName, request.LastName);
+
+            var response = new UpdateCandidateResponse
+            {
+                Candidate = updatedCandidate
+            };
+
+            return Ok(response);
+
+        }
+
     }
 }
