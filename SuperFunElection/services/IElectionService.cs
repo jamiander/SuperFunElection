@@ -15,5 +15,6 @@ namespace SuperFunElection.Controllers
         Task<Election> AddVoteToElection(int electionId, int candidateId, PersonName voter);
         Task<Election> DeleteCandidacy(int candidateId, int electionId);
         Task<Election> TerminateCandidacy(int candidateId, int electionId, DateTime dateTime);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SuperFunElection.Domain
 {
@@ -20,5 +21,15 @@ namespace SuperFunElection.Domain
 
         private List<Candidacy> _electionCandidacies = new List<Candidacy>();
         public IReadOnlyCollection<Candidacy> ElectionCandidacies => _electionCandidacies.AsReadOnly();
+
+        public void AddCandidacy(Candidacy candidacy)
+        {
+            _electionCandidacies.Add(candidacy);
+        }
+
+        public void Update(string firstName, string lastName)
+        {
+            Name = PersonName.Create(firstName, lastName);
+        }
     }
 }

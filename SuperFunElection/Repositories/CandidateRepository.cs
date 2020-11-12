@@ -38,5 +38,11 @@ namespace SuperFunElection.Repositories
             return await validCandidates.ToListAsync();
         }
 
+        public async Task<Candidate> UpdateCandidate(Candidate candidate)
+        {
+            await _dbContext.SaveChangesAsync();
+            return candidate;
+        }
+
     }
 }

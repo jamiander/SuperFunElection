@@ -63,6 +63,7 @@ namespace SuperFunElection
             election.AddCandidate(candidate);
 
             await _electionRepository.UpdateElection(election);
+            await _candidateRepository.UpdateCandidate(candidate);
 
             return election;
         }
@@ -102,6 +103,7 @@ namespace SuperFunElection
             await _electionRepository.UpdateElection(election);
             return election;
         }
-
     }
+
 }
+

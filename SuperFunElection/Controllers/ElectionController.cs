@@ -92,38 +92,7 @@ namespace SuperFunElection.Controllers
             return Ok(response);
         }
 
-        [HttpPost("{id}/delete")]
-        public async Task<IActionResult> DeleteCandidacy(DeleteCandidacyRequest request)
-        {
-            var selectedCandidacy = await _electionService.DeleteCandidacy(request.CandidateId, request.ElectionId);
-
-            var response = new DeleteCandidacyResponse
-            {
-
-                CandidacyId = selectedCandidacy.Id
-
-            };
-
-            return Ok(response);
-        }
-
-        [HttpPost("{id}/terminate")]
-        public async Task<IActionResult> TerminateCandidacy(TerminateCandidacyRequest request)
-        {
-            var selectedCandidacy = await _electionService.TerminateCandidacy(request.CandidateId, request.ElectionId, DateTime.Now);
-
-            var response = new TerminateCandidacyResponse
-            {
-
-                CandidacyId = selectedCandidacy.Id,
-                DateTime = DateTime.Now
-
-            };
-
-            return Ok(response);
-        }
-
-        [HttpPost("{id}/votes")]
+         [HttpPost("{id}/votes")]
         public async Task<IActionResult> AddVoteToElection(AddVoteToElectionRequest request)
         {
             var Voter = PersonName.Create(request.firstName, request.lastName);
@@ -141,6 +110,36 @@ namespace SuperFunElection.Controllers
             return Ok(response);
         }
 
+        [HttpPost("{id}/deleteCandidacy")]
+        public async Task<IActionResult> DeleteCandidacy(DeleteCandidacyRequest request)
+        {
+            var selectedCandidacy = await _electionService.DeleteCandidacy(request.CandidateId, request.ElectionId);
+
+            var response = new DeleteCandidacyResponse
+            {
+
+                CandidacyId = selectedCandidacy.Id
+
+            };
+
+            return Ok(response);
+        }
+
+        [HttpPost("{id}/terminateCandidacy")]
+        public async Task<IActionResult> TerminateCandidacy(TerminateCandidacyRequest request)
+        {
+            var selectedCandidacy = await _electionService.TerminateCandidacy(request.CandidateId, request.ElectionId, DateTime.Now);
+
+            var response = new TerminateCandidacyResponse
+            {
+
+                CandidacyId = selectedCandidacy.Id,
+                DateTime = DateTime.Now
+
+            };
+
+            return Ok(response);
+        }
     }
 }
 
