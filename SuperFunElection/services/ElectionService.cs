@@ -71,6 +71,10 @@ namespace SuperFunElection
         public async Task<Election> AddVoteToElection(int electionId, int candidateId, PersonName voter)
         {
             var election = await _electionRepository.FindById(electionId);
+
+            if (election == null)
+                throw new KeyNotFoundException($"No election with id {electionId} was found.");
+
             var candidate = await _candidateRepository.FindById(candidateId);
            
             election.VoteFor(candidate, voter);

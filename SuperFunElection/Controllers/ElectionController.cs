@@ -17,7 +17,7 @@ namespace SuperFunElection.Controllers
     // api/election
     [Route("api/[controller]")]
     [ApiController]
-    public class ElectionController : ControllerBase
+    public partial class ElectionController : ControllerBase
     {
         private IElectionService _electionService;
         public ElectionController(IElectionService electionService)

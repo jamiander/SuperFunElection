@@ -64,7 +64,9 @@ namespace SuperFunElection.Controllers
 
             var response = new UpdateCandidateResponse
             {
-                Candidate = updatedCandidate
+                CandidateId = updatedCandidate.Id,
+                FirstName = updatedCandidate.Name.FirstName,
+                LastName = updatedCandidate.Name.LastName
             };
 
             return Ok(response);

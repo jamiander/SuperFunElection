@@ -61,10 +61,9 @@ namespace SuperFunElection.Domain
 
         public void VoteFor(Candidate candidate, PersonName voter)
         {
-
             if (candidate is null)
                 throw new ArgumentNullException(nameof(candidate), "You must vote for an existing candidate.");
-            if (voter is null || voter.FirstName == "" || voter.LastName == "")
+            if (voter is null)
                 throw new ArgumentException(nameof(voter), "You must enter a voter first and last name.");
             var duplicateBallot = _candidacies.SelectMany(x => x.Ballots).FirstOrDefault(y => y.Voter == voter);
             if (duplicateBallot != null)

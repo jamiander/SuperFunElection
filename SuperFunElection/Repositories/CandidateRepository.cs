@@ -5,6 +5,7 @@ using SuperFunElection.Domain.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SuperFunElection.Repositories
@@ -27,7 +28,9 @@ namespace SuperFunElection.Repositories
 
         public async Task<Candidate> FindById(int id)
         {
-            Candidate selectedCandidate = _dbContext.Candidates.Find(id);
+            Candidate selectedCandidate = await _dbContext.Candidates
+                .Include(x => x.ElectionCandidacies)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return selectedCandidate;
         }
