@@ -6,18 +6,15 @@ using System;
 using SuperFunElection.Responses;
 using System.Linq;
 using SuperFunElection.Domain.Specifications;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
 using SuperFunElection.Requests;
-using System.Collections.Generic;
-using SuperFunElection.Repositories;
+using SuperFunElection.DtoMappers;
 
 namespace SuperFunElection.Controllers
 {
     // api/election
-    [Route("api/[controller]")]
+    [Route("api/election")]
     [ApiController]
-    public class ElectionController : ControllerBase
+    public partial class ElectionController : ControllerBase
     {
         private IElectionService _electionService;
         public ElectionController(IElectionService electionService)
@@ -48,17 +45,7 @@ namespace SuperFunElection.Controllers
                 return NotFound($"Election with id {id} was not found.");
             }
 
-            var response = new ElectionDetailResponse
-            {
-                Id = selectedElection.Id,
-                Description = selectedElection.Description,
-                Date = selectedElection.Date.ToShortDateString(),
-                Results = selectedElection.Candidacies.Select(c => new ElectionDetailResponse.CandidateItem { 
-                    FirstName = c.Candidate.Name.FirstName,
-                    LastName = c.Candidate.Name.LastName,
-                    Votes = c.Ballots.Count()
-                })
-            };
+            var response = new ElectionDetailResponseMapper().MapFrom(selectedElection);
 
             return Ok(response);         
         }
@@ -92,6 +79,7 @@ namespace SuperFunElection.Controllers
             return Ok(response);
         }
 
+        //[HttpDelete]
         [HttpPost("{id}/delete")]
         public async Task<IActionResult> DeleteCandidacy(DeleteCandidacyRequest request)
         {
