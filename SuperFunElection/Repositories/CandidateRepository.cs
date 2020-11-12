@@ -2,10 +2,8 @@
 using SuperFunElection.Data;
 using SuperFunElection.Domain;
 using SuperFunElection.Domain.Specifications;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SuperFunElection.Repositories

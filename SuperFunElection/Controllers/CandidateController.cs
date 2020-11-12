@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SuperFunElection.Domain;
 using SuperFunElection.Domain.Specifications;
@@ -43,8 +39,18 @@ namespace SuperFunElection.Controllers
         public async Task<IActionResult> GetCandidateById(int id)
         {
             var selectedCandidate = await _candidateService.SelectCandidate(id);
-            return Ok(selectedCandidate);
-            
+
+            if (selectedCandidate == null)
+                return NotFound();
+
+            var result = new GetCandidateByIdResponse
+            {
+                CandidateId = selectedCandidate.Id,
+                FirstName = selectedCandidate.Name.FirstName,
+                LastName = selectedCandidate.Name.LastName
+            };
+
+            return Ok(result); 
         }
 
         [HttpPost()]
